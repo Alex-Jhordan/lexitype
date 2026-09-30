@@ -72,7 +72,7 @@
   - Create `src/components/GameCanvas.vue` with tag `<canvas data-testid="game-canvas">`. Bind `requestAnimationFrame` loop to consume state exposed by `useGameEngine.ts` and render 4 layers: starfield background, word entities (highlighting correct letters in `emerald-500`), laser projectiles, and explosion particles.
   - Create `src/components/GameScreen.vue` integrating `GameHeader`, `GameCanvas`, and `TypingInputDisplay` in a vertical layout.
 
-- [ ] ### Task 5.4: Main Orchestration in App.vue
+- [X] ### Task 5.4: Main Orchestration in App.vue
   - In `src/App.vue`, import store `useGameStore()`.
   - Use conditional rendering with `v-if` / `v-else-if` evaluating `store.currentState` to switch between `InstructionsModal`, `TopicInputScreen`, `FuelLoadingScreen`, `ServiceUnavailableScreen`, `GameScreen`, and `GameOverModal`.
 
