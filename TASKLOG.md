@@ -32,7 +32,7 @@
 
 ## Phase 4: Canvas 2D Game Kernel — Physics, Typing, and Metrics
 
-- [ ] ### Task 4.1: TDD RED - Writing Tests for Pure Motor Logic (useGameEngine)
+- [X] ### Task 4.1: TDD RED - Writing Tests for Pure Motor Logic (useGameEngine)
   - Create the directory `src/composables/__tests__/` and the file `useGameEngine.spec.ts`.
   - Write the test `test_target_selection_closest_to_bottom()` instantiating two words on screen with the same starting letter (Word A at Y=100, Word B at Y=300); simulate key press and assert that the selected target word is the one at Y=300.
   - Write the test `test_target_unlock_on_backspace()` verifying that typing characters locks the target, and pressing Backspace until emptying the buffer (`""`) changes the `targetWord` variable to `null`.
