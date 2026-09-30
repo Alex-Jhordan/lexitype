@@ -58,7 +58,7 @@
   - In `GameOverModal.spec.ts`, mount component passing test metrics and verify `[data-testid="wpm-metric"]` shows correct numerical value and the left column lists all 5 accented words (`display_word`).
   - Run `npx vitest run src/components/__tests__/` and confirm failure (Red).
 
-- [ ] ### Task 5.2: TDD GREEN - Implementing Initial Views and Modals
+- [X] ### Task 5.2: TDD GREEN - Implementing Initial Views and Modals
   - Create `src/components/InstructionsModal.vue` styled with Tailwind CSS (`bg-zinc-900/90 backdrop-blur-md`), including title with font "Press Start 2P" and button with attribute `data-testid="start-btn"`.
   - Create `src/components/TopicInputScreen.vue` with field `<input data-testid="topic-input">` bound via `v-model`, and button `<button data-testid="submit-topic-btn" :disabled="topic.length < 2">`.
   - Create `src/components/FuelLoadingScreen.vue` including SVG silhouette of the ship (`data-testid="fuel-ship-svg"`) with vertical fill animation in CSS/Tailwind (`bg-cyan-500`).
