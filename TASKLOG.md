@@ -39,7 +39,7 @@
   - Write the test `test_wpm_and_accuracy_calculation()` verifying that with 50 correct keys, 10 incorrect keys, and 20 seconds elapsed, the `calculateMetrics()` function returns WPM = 30 and Accuracy = 83.33%.
   - Run `npx vitest run src/composables/__tests__/useGameEngine.spec.ts` and confirm failure (Red).
 
-- [ ] ### Task 4.2: TDD GREEN - Implementing Physics and Typing Kernel (useGameEngine.ts)
+- [X] ### Task 4.2: TDD GREEN - Implementing Physics and Typing Kernel (useGameEngine.ts)
   - Create the file `src/composables/useGameEngine.ts` exporting the function/class with pure mathematical logic decoupled from Canvas.
   - Implement position update functions: `Y_new = Y_current + (speed * t)` with speeds between 120 and 160 px/s.
   - Implement target selection algorithm in `handleKeyDown(key: string)` searching for words starting with the character, applying `.reduce()` to find the one with the highest Y coordinate.
