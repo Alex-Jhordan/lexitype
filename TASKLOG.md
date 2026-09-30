@@ -66,7 +66,7 @@
   - Create `src/components/GameOverModal.vue` implementing two-column layout without scroll; in `onMounted()`, import and trigger `confetti()` from `canvas-confetti`. Include identifiers `data-testid="wpm-metric"`, `data-testid="accuracy-metric"`, `data-testid="words-count-metric"`, and `data-testid="play-again-btn"`.
   - Run `npx vitest run src/components/__tests__/` and verify pass to green (Green).
 
-- [ ] ### Task 5.3: Implementing Active Game Area (GameScreen.vue and Subcomponents)
+- [X] ### Task 5.3: Implementing Active Game Area (GameScreen.vue and Subcomponents)
   - Create `src/components/GameHeader.vue` showing timer `data-testid="game-timer"` and a `v-for` loop rendering 5 Lucide heart icons (`data-testid="heart-icon"`).
   - Create `src/components/TypingInputDisplay.vue` with fixed bottom container `data-testid="typing-display"` projecting active text buffer in neon cyan monospace font.
   - Create `src/components/GameCanvas.vue` with tag `<canvas data-testid="game-canvas">`. Bind `requestAnimationFrame` loop to consume state exposed by `useGameEngine.ts` and render 4 layers: starfield background, word entities (highlighting correct letters in `emerald-500`), laser projectiles, and explosion particles.

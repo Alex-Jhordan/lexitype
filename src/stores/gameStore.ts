@@ -1,6 +1,6 @@
 import { defineStore } from 'pinia'
 import { ref } from 'vue'
-import type { GameState, WordItem } from '../types/game'
+import type { GameMetrics, GameState, WordItem } from '../types/game'
 
 const allowedTransitions: Record<GameState, readonly GameState[]> = {
   INSTRUCTIONS: ['TOPIC_INPUT'],
@@ -17,6 +17,7 @@ export const useGameStore = defineStore('game', () => {
   const words = ref<WordItem[]>([])
   const lives = ref(5)
   const elapsedTime = ref(0)
+  const gameMetrics = ref<GameMetrics | null>(null)
 
   function setState(newState: GameState): void {
     if (!allowedTransitions[currentState.value].includes(newState)) {
@@ -32,6 +33,7 @@ export const useGameStore = defineStore('game', () => {
     words,
     lives,
     elapsedTime,
+    gameMetrics,
     setState,
   }
 })
