@@ -51,7 +51,7 @@
 
 ## Phase 5: UI Components, Modals, and Canvas 2D Rendering
 
-- [ ] ### Task 5.1: TDD RED - Writing UI Component Tests with Vue Test Utils
+- [X] ### Task 5.1: TDD RED - Writing UI Component Tests with Vue Test Utils
   - Create directory `src/components/__tests__/` and inside instantiate `InstructionsModal.spec.ts`, `TopicInputScreen.spec.ts`, and `GameOverModal.spec.ts`.
   - In `InstructionsModal.spec.ts`, mount component with `mount()` from Vue Test Utils and assert that simulating a click on `[data-testid="start-btn"]` transitions store to `'TOPIC_INPUT'` state.
   - In `TopicInputScreen.spec.ts`, assert that button `[data-testid="submit-topic-btn"]` is disabled with a 1-character input and enabled when typing 2 or more characters.
