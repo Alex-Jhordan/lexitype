@@ -13,12 +13,12 @@
   - Run `npx vitest run` to verify the proper initialization of the testing environment.
   - Ensure Docker runtime is running, then run the command `docker compose up --build -d` from `lexitype-workspace/` to verify container orchestration between frontend and backend services.
 
-- [ ] ### Task 3.2: TDD RED - Writing Unit Tests for the Pinia State Machine
+- [X] ### Task 3.2: TDD RED - Writing Unit Tests for the Pinia State Machine
   - Create the directory `src/stores/` and the file `src/stores/__tests__/gameStore.spec.ts`.
   - In `gameStore.spec.ts`, configure `setActivePinia(createPinia())` in the `beforeEach()` block.
   - Write the test `test_initial_state_is_instructions()` asserting that the initial state of the store is `'INSTRUCTIONS'`.
   - Write the test `test_valid_state_transitions()` evaluating the execution of actions to transition from `'INSTRUCTIONS'` to `'TOPIC_INPUT'`, `'LLM_LOADING'`, `'PLAYING'`, and `'GAME_OVER'`.
-  - Write the test `test_invalid_state_transition()` attempting to force a direct change from `'INSTRUCTIONS'` to `'PLAYING'`, asserting that the store maintains the original state or throws an error.
+  - Write the test `test_invalid_state_transition()` attempting to force a direct change from `'INSTRUCTIONS'` to `'PLAYING'`, asserting with `expect(() => store.setState('PLAYING')).toThrow()` that the operation throws an error and maintains the state in `'INSTRUCTIONS'`.
   - Run `npx vitest run src/stores/__tests__/gameStore.spec.ts` and confirm that it fails (Red).
 
 - [ ] ### Task 3.3: TDD GREEN - Implementing the Pinia Store (useGameStore)
