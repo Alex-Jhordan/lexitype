@@ -71,7 +71,8 @@
 - [X] ### Task 5.3: Implementing Active Game Area (GameScreen.vue and Subcomponents)
   - Create `src/components/GameHeader.vue` showing timer `data-testid="game-timer"` and a `v-for` loop rendering 5 Lucide heart icons (`data-testid="heart-icon"`).
   - Create `src/components/TypingInputDisplay.vue` with fixed bottom container `data-testid="typing-display"` projecting active text buffer in neon cyan monospace font.
-  - Create `src/components/GameCanvas.vue` with tag `<canvas data-testid="game-canvas">`. Bind `requestAnimationFrame` loop to consume state exposed by `useGameEngine.ts` and render 4 layers: starfield background, word entities (highlighting correct letters in `emerald-500`), laser projectiles, and explosion particles.
+  - Create `src/components/GameCanvas.vue` with tag `<canvas data-testid="game-canvas">`. Bind `requestAnimationFrame` loop to consume state exposed by `useGameEngine.ts`, rendering 4 layers: starfield background, word entities (highlighting correct letters in `emerald-500`), laser projectiles, and explosion particles.
+  - Implement continuous word recycling/respawn mechanism in `GameCanvas.vue` to maintain an active word stream from the 5 base terms until the 20-second timer or 5-life limit triggers `finishGame()`.
   - Create `src/components/GameScreen.vue` integrating `GameHeader`, `GameCanvas`, and `TypingInputDisplay` in a vertical layout.
 
 - [X] ### Task 5.4: Main Orchestration in App.vue

@@ -86,6 +86,15 @@ function resizeCanvas(): void {
   }
 }
 
+function respawnWord(word: CanvasWord): void {
+  const column = Math.floor(Math.random() * 3)
+  const columnWidth = canvasWidth / 3
+  
+  word.x = columnWidth * column + columnWidth / 2
+  word.y = -Math.random() * 80 - 40 
+  word.speed = undefined
+}
+
 function finishGame(): void {
   if (isFinished) return
   isFinished = true
@@ -126,10 +135,10 @@ function handleKeyDown(event: KeyboardEvent): void {
     if (!activeWords.includes(word)) {
       emit('word-destroyed', word)
       addExplosion(word.x, word.y)
+      activeWords.push(word)
+      respawnWord(word)
     }
   }
-
-  if (activeWords.length === 0) finishGame()
 }
 
 function addExplosion(x: number, y: number): void {
@@ -185,12 +194,9 @@ function renderFrame(timestamp: number): void {
 
   const missedWords = activeWords.filter((word) => word.y >= canvasHeight - 42)
   for (const word of missedWords) {
-    const index = activeWords.indexOf(word)
-    if (index >= 0) activeWords.splice(index, 1)
     emit('word-missed', getMetrics())
+    respawnWord(word)
   }
-
-  if (activeWords.length === 0) finishGame()
 
   if (context) {
     context.clearRect(0, 0, canvasWidth, canvasHeight)
