@@ -82,13 +82,13 @@
 
 ## Phase 6: End-to-End (E2E) Testing and Frontend Deployment
 
-- [ ] ### Task 6.1: TDD E2E - Implementing E2E Suite with Playwright
+- [X] ### Task 6.1: TDD E2E - Implementing E2E Suite with Playwright
   - Create `e2e/` directory in root of `lexitype` and file `e2e/game-flow.spec.ts`.
   - Configure `playwright.config.ts` to launch Vite development server (`http://localhost:5173`) before running tests.
   - In `e2e/game-flow.spec.ts`, write test `test_full_game_loop_with_mock_api()` intercepting route `/api/generate-words` via `page.route()` to return static JSON of 5 words with HTTP 200 code.
   - Simulate real interaction: click `[data-testid="start-btn"]`, type "Vue.js" in `[data-testid="topic-input"]`, click `[data-testid="submit-topic-btn"]`, wait for loading screen, simulate keyboard key presses `page.keyboard.press()` to destroy words, and assert visibility of `[data-testid="wpm-metric"]` in final modal.
   - Write test `test_service_unavailable_flow()` intercepting `/api/generate-words` with HTTP 503 response and asserting that screen displays `[data-testid="retry-btn"]`.
-  - Run `npx playwright test` and confirm complete suite executes successfully in headless mode.
+  - Ensure Playwright browser binaries are installed via `npx playwright install`, then run `npx playwright test` and confirm complete suite executes successfully in headless mode.
 
 - [ ] ### Task 6.2: Frontend CI/CD Pipeline
   - In `lexitype` repository, create file `.github/workflows/ci.yml` configuring steps: `actions/checkout`, `actions/setup-node`, `pnpm ci`, `npx vue-tsc --noEmit`, `npx vitest run`, and `npx playwright test`.
