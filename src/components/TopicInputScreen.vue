@@ -26,7 +26,7 @@ const gameStore = useGameStore()
         />
         <button
           data-testid="submit-topic-btn"
-          class="w-full border border-cyan-300 bg-cyan-300 px-5 py-3 text-sm font-bold uppercase tracking-widest text-zinc-950 transition hover:bg-cyan-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-200 disabled:cursor-not-allowed disabled:border-zinc-700 disabled:bg-zinc-800 disabled:text-zinc-500 sm:w-auto"
+          class="cursor-pointer w-full border border-cyan-300 bg-cyan-300 px-5 py-3 text-sm font-bold uppercase tracking-widest text-zinc-950 transition hover:bg-cyan-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-200 disabled:cursor-not-allowed disabled:border-zinc-700 disabled:bg-zinc-800 disabled:text-zinc-500 sm:w-auto"
           type="submit"
           :disabled="gameStore.topic.trim().length < 2"
         >

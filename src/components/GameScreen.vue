@@ -26,7 +26,7 @@ function handleGameFinished(metrics: GameMetrics): void {
 </script>
 
 <template>
-  <main class="flex h-screen min-h-[420px] flex-col overflow-hidden bg-zinc-950 text-zinc-100">
+  <main class="flex h-screen min-h-105 flex-col overflow-hidden bg-zinc-950 text-zinc-100">
     <GameHeader />
     <section class="relative min-h-0 flex-1" aria-label="Active typing game">
       <GameCanvas

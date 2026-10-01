@@ -14,7 +14,7 @@ const gameStore = useGameStore()
       </p>
       <button
         data-testid="retry-btn"
-        class="border border-amber-300 bg-amber-300 px-5 py-3 text-sm font-bold uppercase tracking-widest text-zinc-950 transition hover:bg-amber-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-200"
+        class="cursor-pointer border border-amber-300 bg-amber-300 px-5 py-3 text-sm font-bold uppercase tracking-widest text-zinc-950 transition hover:bg-amber-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-amber-200"
         type="button"
         @click="gameStore.setState('LLM_LOADING')"
       >

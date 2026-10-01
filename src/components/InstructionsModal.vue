@@ -16,7 +16,7 @@ const gameStore = useGameStore()
       </p>
       <button
         data-testid="start-btn"
-        class="w-full border border-cyan-300 bg-cyan-300 px-5 py-4 text-sm font-bold uppercase tracking-widest text-zinc-950 transition hover:bg-cyan-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-200 sm:w-auto"
+        class="cursor-pointer w-full border border-cyan-300 bg-cyan-300 px-5 py-4 text-sm font-bold uppercase tracking-widest text-zinc-950 transition hover:bg-cyan-200 focus-visible:outline-2 focus-visible:outline-offset-4 focus-visible:outline-cyan-200 sm:w-auto"
         type="button"
         @click="gameStore.setState('TOPIC_INPUT')"
       >
