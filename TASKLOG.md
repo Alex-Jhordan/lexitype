@@ -92,5 +92,6 @@
 
 - [X] ### Task 6.2: Frontend CI/CD Pipeline
   - In `lexitype` repository, create file `.github/workflows/ci.yml` configuring steps: `actions/checkout`, `actions/setup-node`, `pnpm ci`, `npx vue-tsc --noEmit`, `npx vitest run`, and `npx playwright test`.
+  - Validate strict TypeScript compilation (`vue-tsc -b`) across store definitions and canvas components to ensure zero unused imports and complete type safety on `GameWord` references before build.
   - In Vercel, connect `lexitype` repository, setting framework as Vue.js, build root, and environment variable `VITE_API_URL` pointing to Render (`https://lexitype-api.onrender.com`).
   - Execute a test deployment and perform a manual End-to-End verification navigating to the domain assigned by Vercel to mark the complete project workflow as completed.

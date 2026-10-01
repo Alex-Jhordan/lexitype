@@ -1,5 +1,5 @@
 import { defineStore } from 'pinia'
-import { ref, watch } from 'vue'
+import { ref } from 'vue'
 import { fetchWordsByTopic } from '../services/apiService'
 import type { GameMetrics, GameState, WordItem } from '../types/game'
 

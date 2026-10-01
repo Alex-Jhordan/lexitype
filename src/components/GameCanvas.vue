@@ -109,18 +109,18 @@ function handleKeyDown(event: KeyboardEvent): void {
   engine.handleKeyDown(event.key)
   emit('typing-update', engine.typingBuffer.value)
 
-  if (engine.correctKeys.value > correctCountBefore) {
-    const target = engine.targetWord.value ?? targetBefore
+    if (engine.correctKeys.value > correctCountBefore) {
+    const target = (engine.targetWord.value ?? targetBefore) as CanvasWord | null
     if (target) {
-      projectiles.push({
+        projectiles.push({
         startX: canvasWidth / 2,
         startY: canvasHeight - 22,
         endX: target.x,
         endY: target.y + 8,
         progress: 0,
-      })
+        })
     }
-  }
+    }
 
   for (const word of existingWords) {
     if (!activeWords.includes(word)) {
