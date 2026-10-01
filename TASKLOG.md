@@ -8,7 +8,7 @@
   - Update the `docker-compose.yml` file in the root of `lexitype-workspace/` to include the `lexitype-frontend` service (mapping `./lexitype` to port 5173).
   - Configure the environment variable `VITE_API_URL=http://localhost:8000` to connect with the backend.
   - Install main dependencies by running `pnpm install pinia @vueuse/core @lucide/vue canvas-confetti` and `pnpm install -D typescript tailwindcss @tailwindcss/vite vitest @vue/test-utils jsdom playwright @types/canvas-confetti`.
-  - Configure `vite.config.ts` importing `defineConfig` from `vitest/config`, `@tailwindcss/vite` and defining the block `test: { environment: 'jsdom', globals: true }` to enable Vitest.
+  - Configure `vite.config.ts` importing `defineConfig` and `configDefaults` from `vitest/config`, `@tailwindcss/vite`, and defining the block `test: { environment: 'jsdom', globals: true, exclude: [...configDefaults.exclude, 'e2e/**'] }` to enable Vitest while excluding E2E tests from the unit runner.
   - Configure `src/assets/main.css` with the `@import "tailwindcss";` directive and import Google Fonts "Press Start 2P" and "JetBrains Mono".
   - Run `npx vitest run` to verify the proper initialization of the testing environment.
   - Ensure Docker runtime is running, then run the command `docker compose up --build -d` from `lexitype-workspace/` to verify container orchestration between frontend and backend services.
