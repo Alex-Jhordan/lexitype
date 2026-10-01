@@ -1,10 +1,15 @@
 import { createPinia, setActivePinia } from 'pinia'
-import { beforeEach, describe, expect, it } from 'vitest'
+import { beforeEach, describe, expect, it, vi } from 'vitest'
+import * as apiService from '../../services/apiService'
 import { useGameStore } from '../gameStore'
 
 describe('useGameStore state machine', () => {
   beforeEach(() => {
     setActivePinia(createPinia())
+
+    vi.spyOn(apiService, 'fetchWordsByTopic').mockResolvedValue([
+      { word: 'VUE', display_word: 'Vue', meaning: 'Progressive Framework' },
+    ])
   })
 
   it('test_initial_state_is_instructions', () => {

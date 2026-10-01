@@ -23,13 +23,17 @@ export const useGameStore = defineStore('game', () => {
   async function loadWords(): Promise<void> {
     try {
       const generatedWords = await fetchWordsByTopic(topic.value)
-      words.value = generatedWords
-      lives.value = 5
-      elapsedTime.value = 0
-      setState('PLAYING')
+      if (currentState.value === 'LLM_LOADING') {
+        words.value = generatedWords
+        lives.value = 5
+        elapsedTime.value = 0
+        setState('PLAYING')
+      }
     } catch (error) {
       console.error('Failed to load words:', error)
-      setState('SERVICE_UNAVAILABLE')
+      if (currentState.value === 'LLM_LOADING') {
+        setState('SERVICE_UNAVAILABLE')
+      }
     }
   }
 
