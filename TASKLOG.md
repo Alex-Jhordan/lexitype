@@ -21,11 +21,13 @@
   - Write the test `test_invalid_state_transition()` attempting to force a direct change from `'INSTRUCTIONS'` to `'PLAYING'`, asserting with `expect(() => store.setState('PLAYING')).toThrow()` that the operation throws an error and maintains the state in `'INSTRUCTIONS'`.
   - Run `npx vitest run src/stores/__tests__/gameStore.spec.ts` and confirm that it fails (Red).
 
-- [X] ### Task 3.3: TDD GREEN - Implementing the Pinia Store (useGameStore)
+- [X] ### Task 3.3: TDD GREEN - Implementing the Pinia Store (useGameStore) and API Service
   - Create the file `src/types/game.ts` defining the exported type `export type GameState = 'INSTRUCTIONS' | 'TOPIC_INPUT' | 'LLM_LOADING' | 'SERVICE_UNAVAILABLE' | 'PLAYING' | 'GAME_OVER';` and the interfaces `WordItem` and `GameMetrics`.
+  - Create the file `src/services/apiService.ts` to handle HTTP communication with the backend endpoint `/api/generate-words` using `VITE_API_URL` (defaulting to `http://localhost:8000`).
   - Create the file `src/stores/gameStore.ts` using the Setup Store syntax (`defineStore('game', () => ...)`).
   - Define reactive states: `currentState = ref<GameState>('INSTRUCTIONS')`, `topic = ref('')`, `words = ref<WordItem[]>([])`, `lives = ref(5)`, `elapsedTime = ref(0)`.
   - Implement the function `setState(newState: GameState)` adding a allowed transition validation structure before assigning the value to `currentState.value`.
+  - Implement asynchronous `loadWords()` action triggered upon entering `LLM_LOADING` to fetch words from the backend API, updating game state to `PLAYING` on success or transitioning to `SERVICE_UNAVAILABLE` on network/server failure.
   - Run `npx vitest run src/stores/__tests__/gameStore.spec.ts` and confirm that all tests pass to green (Green).
 
 ---
