@@ -6,8 +6,8 @@ export interface GameWord {
   speed?: number
 }
 
-export const MIN_WORD_SPEED = 60
-export const MAX_WORD_SPEED = 100
+export const MIN_WORD_SPEED = 20
+export const MAX_WORD_SPEED = 60
 
 export function createWordSpeed(): number {
   return MIN_WORD_SPEED + Math.random() * (MAX_WORD_SPEED - MIN_WORD_SPEED)

@@ -72,7 +72,7 @@
   - Create `src/components/GameHeader.vue` showing timer `data-testid="game-timer"` and a `v-for` loop rendering 5 Lucide heart icons (`data-testid="heart-icon"`).
   - Create `src/components/TypingInputDisplay.vue` with fixed bottom container `data-testid="typing-display"` projecting active text buffer in neon cyan monospace font.
   - Create `src/components/GameCanvas.vue` with tag `<canvas data-testid="game-canvas">`. Bind `requestAnimationFrame` loop to consume state exposed by `useGameEngine.ts`, rendering 4 layers: starfield background, word entities (highlighting correct letters in `emerald-500`), laser projectiles, and explosion particles.
-  - Implement continuous word recycling/respawn mechanism in `GameCanvas.vue` to maintain an active word stream from the 5 base terms until the 20-second timer or 5-life limit triggers `finishGame()`.
+  - Implement continuous word recycling/respawn in `GameCanvas.vue`: keep the 5 generated terms in the active stream by respawning destroyed or fallen words at a random horizontal position with independent fall speed. End the match through `finishGame()` when the 20-second timer expires, or transition to `GAME_OVER` immediately when the player loses all 5 lives.
   - Create `src/components/GameScreen.vue` integrating `GameHeader`, `GameCanvas`, and `TypingInputDisplay` in a vertical layout.
 
 - [X] ### Task 5.4: Main Orchestration in App.vue
@@ -87,7 +87,7 @@
   - Create `e2e/` directory in root of `lexitype` and file `e2e/game-flow.spec.ts`.
   - Configure `playwright.config.ts` to launch Vite development server (`http://localhost:5173`) before running tests.
   - In `e2e/game-flow.spec.ts`, write test `test_full_game_loop_with_mock_api()` intercepting route `/api/generate-words` via `page.route()` to return static JSON of 5 words with HTTP 200 code.
-  - Simulate real interaction: click `[data-testid="start-btn"]`, type "Vue.js" in `[data-testid="topic-input"]`, click `[data-testid="submit-topic-btn"]`, wait for loading screen, simulate keyboard key presses `page.keyboard.press()` to destroy words, and assert visibility of `[data-testid="wpm-metric"]` in final modal.
+  - Simulate real interaction: click `[data-testid="start-btn"]`, type "Vue.js" in `[data-testid="topic-input"]`, click `[data-testid="submit-topic-btn"]`, and wait for the game canvas. Type the 5 words twice to exercise recycling while confirming the game remains active, then advance Playwright's virtual clock past 20 seconds and assert visibility of `[data-testid="wpm-metric"]` in the final modal.
   - Write test `test_service_unavailable_flow()` intercepting `/api/generate-words` with HTTP 503 response and asserting that screen displays `[data-testid="retry-btn"]`.
   - Ensure Playwright browser binaries are installed via `npx playwright install`, then run `npx playwright test` and confirm complete suite executes successfully in headless mode.
 

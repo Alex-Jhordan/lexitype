@@ -188,6 +188,11 @@ function renderFrame(timestamp: number): void {
   if (secondAccumulator >= 1) {
     secondAccumulator -= 1
     emit('second-elapsed')
+
+    if (gameStore.elapsedTime >= 20) {
+      finishGame()
+      return
+    }
   }
 
   engine.updateWordPositions(frameSeconds)

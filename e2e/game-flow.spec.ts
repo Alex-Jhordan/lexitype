@@ -9,6 +9,8 @@ const generatedWords = [
 ]
 
 test('test_full_game_loop_with_mock_api', async ({ page }) => {
+  await page.clock.install()
+
   await page.route('**/api/generate-words', async (route) => {
     await route.fulfill({
       status: 200,
@@ -28,10 +30,16 @@ test('test_full_game_loop_with_mock_api', async ({ page }) => {
   await generatedWordsResponse
   await expect(page.getByTestId('game-canvas')).toBeVisible()
 
-  for (const { word } of generatedWords) {
-    await page.keyboard.type(word)
+  for (let cycle = 0; cycle < 2; cycle += 1) {
+    for (const { word } of generatedWords) {
+      await page.keyboard.type(word)
+    }
   }
 
+  await expect(page.getByTestId('game-canvas')).toBeVisible()
+  await expect(page.getByRole('group', { name: '5 lives remaining' })).toBeVisible()
+
+  await page.clock.runFor(21_000)
   await expect(page.getByTestId('wpm-metric')).toBeVisible()
 })
 
