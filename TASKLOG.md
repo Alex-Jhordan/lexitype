@@ -90,7 +90,7 @@
   - Write test `test_service_unavailable_flow()` intercepting `/api/generate-words` with HTTP 503 response and asserting that screen displays `[data-testid="retry-btn"]`.
   - Ensure Playwright browser binaries are installed via `npx playwright install`, then run `npx playwright test` and confirm complete suite executes successfully in headless mode.
 
-- [ ] ### Task 6.2: Frontend CI/CD Pipeline
+- [X] ### Task 6.2: Frontend CI/CD Pipeline
   - In `lexitype` repository, create file `.github/workflows/ci.yml` configuring steps: `actions/checkout`, `actions/setup-node`, `pnpm ci`, `npx vue-tsc --noEmit`, `npx vitest run`, and `npx playwright test`.
-  - In Vercel, connect `lexitype` repository, setting framework as Vue.js, build root, and environment variable `VITE_API_URL` pointing to Koyeb (`https://lexitype-api.koyeb.app`).
+  - In Vercel, connect `lexitype` repository, setting framework as Vue.js, build root, and environment variable `VITE_API_URL` pointing to Render (`https://lexitype-api.onrender.com`).
   - Execute a test deployment and perform a manual End-to-End verification navigating to the domain assigned by Vercel to mark the complete project workflow as completed.
