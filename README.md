@@ -26,7 +26,7 @@ This repository contains the Single Page Application (SPA) frontend client for *
 2. **Finite State Machine:** Clean UI transitions managed via Pinia across six disjoint states: `INSTRUCTIONS`, `TOPIC_INPUT`, `LLM_LOADING`, `SERVICE_UNAVAILABLE`, `PLAYING`, and `GAME_OVER`.
 3. **Decoupled 2D Engine Kernel:** Frame-rate independent physics loop running at 60 FPS using delta time ($t$). Features vertical parallax starfields, laser trajectories, target locking algorithms, and particle explosion effects.
 4. **Target Lock & Smart Prioritization:** Automatically resolves input conflicts when multiple words on screen share the same starting letter by locking onto the word closest to the bottom (highest $Y$ coordinate).
-5. **Real-time Performance Metrics:** Evaluates typing speed (WPM), accuracy percentage, and destroyed vs. fallen word balance upon session completion.
+5. **Real-time Performance Metrics:** Evaluates typing speed (WPM), accuracy percentage, and separate counts of word appearances destroyed or fallen during the session. Recycled appearances count again, even when they contain a previously seen term.
 
 ---
 

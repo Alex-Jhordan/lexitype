@@ -23,12 +23,14 @@ describe('GameOverModal', () => {
     ]
     const wrapper = mount(GameOverModal, {
       props: {
-        metrics: { wpm: 42, accuracy: 95, wordsCount: 5 },
+        metrics: { wpm: 42, accuracy: 95, destroyedWords: 8, fallenWords: 3 },
       },
       global: { plugins: [pinia] },
     })
 
     expect(wrapper.get('[data-testid="wpm-metric"]').text()).toContain('42')
+    expect(wrapper.get('[data-testid="destroyed-words-metric"]').text()).toBe('8')
+    expect(wrapper.get('[data-testid="fallen-words-metric"]').text()).toBe('3')
 
     for (const displayWord of ['árbol', 'café', 'corazón', 'pingüino', 'acción']) {
       expect(wrapper.text()).toContain(displayWord)

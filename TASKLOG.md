@@ -22,7 +22,7 @@
   - Run `npx vitest run src/stores/__tests__/gameStore.spec.ts` and confirm that it fails (Red).
 
 - [X] ### Task 3.3: TDD GREEN - Implementing the Pinia Store (useGameStore) and API Service
-  - Create the file `src/types/game.ts` defining the exported type `export type GameState = 'INSTRUCTIONS' | 'TOPIC_INPUT' | 'LLM_LOADING' | 'SERVICE_UNAVAILABLE' | 'PLAYING' | 'GAME_OVER';` and the interfaces `WordItem` and `GameMetrics`.
+  - Create the file `src/types/game.ts` defining the exported type `export type GameState = 'INSTRUCTIONS' | 'TOPIC_INPUT' | 'LLM_LOADING' | 'SERVICE_UNAVAILABLE' | 'PLAYING' | 'GAME_OVER';` and the interfaces `WordItem` and `GameMetrics`, with separate destroyed- and fallen-word appearance counts.
   - Create the file `src/services/apiService.ts` to handle HTTP communication with the backend endpoint `/api/generate-words` using `VITE_API_URL` (defaulting to `http://localhost:8000`).
   - Create the file `src/stores/gameStore.ts` using the Setup Store syntax (`defineStore('game', () => ...)`).
   - Define reactive states: `currentState = ref<GameState>('INSTRUCTIONS')`, `topic = ref('')`, `words = ref<WordItem[]>([])`, `lives = ref(5)`, `elapsedTime = ref(0)`.
@@ -38,7 +38,7 @@
   - Create the directory `src/composables/__tests__/` and the file `useGameEngine.spec.ts`.
   - Write the test `test_target_selection_closest_to_bottom()` instantiating two words on screen with the same starting letter (Word A at Y=100, Word B at Y=300); simulate key press and assert that the selected target word is the one at Y=300.
   - Write the test `test_target_unlock_on_backspace()` verifying that typing characters locks the target, and pressing Backspace until emptying the buffer (`""`) changes the `targetWord` variable to `null`.
-  - Write the test `test_wpm_and_accuracy_calculation()` verifying that with 50 correct keys, 10 incorrect keys, and 20 seconds elapsed, the `calculateMetrics()` function returns WPM = 30 and Accuracy = 83.33%.
+  - Write the test `test_wpm_accuracy_and_word_outcome_counts()` verifying WPM = 30 and Accuracy = 83.33% for 50 correct keys, 10 incorrect keys, and 20 seconds elapsed, and verifying that destroyed and fallen appearances are counted separately, including repeated appearances of the same term.
   - Run `npx vitest run src/composables/__tests__/useGameEngine.spec.ts` and confirm failure (Red).
 
 - [X] ### Task 4.2: TDD GREEN - Implementing Physics and Typing Kernel (useGameEngine.ts)
@@ -46,7 +46,7 @@
   - Implement position update functions: `Y_new = Y_current + (speed * t)` with speeds between 120 and 160 px/s.
   - Implement target selection algorithm in `handleKeyDown(key: string)` searching for words starting with the character, applying `.reduce()` to find the one with the highest Y coordinate.
   - Implement editing logic for Backspace releasing word reference when emptying buffer, and register correct and incorrect key presses in pure counters.
-  - Implement exported formulas `calculateWPM(correctChars, seconds)` and `calculateAccuracy(correctKeys, totalKeys)`.
+  - Implement exported formulas `calculateWPM(correctChars, seconds)` and `calculateAccuracy(correctKeys, totalKeys)`, and track destroyed and fallen word appearances separately.
   - Run `npx vitest run src/composables/__tests__/useGameEngine.spec.ts` and verify suite passes to green (Green).
 
 ---
@@ -57,7 +57,7 @@
   - Create directory `src/components/__tests__/` and inside instantiate `InstructionsModal.spec.ts`, `TopicInputScreen.spec.ts`, and `GameOverModal.spec.ts`.
   - In `InstructionsModal.spec.ts`, mount component with `mount()` from Vue Test Utils and assert that simulating a click on `[data-testid="start-btn"]` transitions store to `'TOPIC_INPUT'` state.
   - In `TopicInputScreen.spec.ts`, assert that button `[data-testid="submit-topic-btn"]` is disabled with a 1-character input and enabled when typing 2 or more characters.
-  - In `GameOverModal.spec.ts`, mount component passing test metrics and verify `[data-testid="wpm-metric"]` shows correct numerical value and the left column lists all 5 accented words (`display_word`).
+  - In `GameOverModal.spec.ts`, mount component passing test metrics and verify `[data-testid="wpm-metric"]`, `[data-testid="destroyed-words-metric"]`, and `[data-testid="fallen-words-metric"]` show their exact values, while the left column lists all 5 accented words (`display_word`).
   - Run `npx vitest run src/components/__tests__/` and confirm failure (Red).
 
 - [X] ### Task 5.2: TDD GREEN - Implementing Initial Views and Modals
@@ -65,14 +65,14 @@
   - Create `src/components/TopicInputScreen.vue` with field `<input data-testid="topic-input">` bound via `v-model`, and button `<button data-testid="submit-topic-btn" :disabled="topic.length < 2">`.
   - Create `src/components/FuelLoadingScreen.vue` including SVG silhouette of the ship (`data-testid="fuel-ship-svg"`) with vertical fill animation in CSS/Tailwind (`bg-cyan-500`).
   - Create `src/components/ServiceUnavailableScreen.vue` with maintenance message and `data-testid="retry-btn"` button.
-  - Create `src/components/GameOverModal.vue` implementing two-column layout without scroll; in `onMounted()`, import and trigger `confetti()` from `canvas-confetti`. Include identifiers `data-testid="wpm-metric"`, `data-testid="accuracy-metric"`, `data-testid="words-count-metric"`, and `data-testid="play-again-btn"`.
+  - Create `src/components/GameOverModal.vue` implementing two-column layout without scroll; in `onMounted()`, import and trigger `confetti()` from `canvas-confetti`. Include identifiers `data-testid="wpm-metric"`, `data-testid="accuracy-metric"`, `data-testid="destroyed-words-metric"`, `data-testid="fallen-words-metric"`, and `data-testid="play-again-btn"`.
   - Run `npx vitest run src/components/__tests__/` and verify pass to green (Green).
 
 - [X] ### Task 5.3: Implementing Active Game Area (GameScreen.vue and Subcomponents)
   - Create `src/components/GameHeader.vue` showing timer `data-testid="game-timer"` and a `v-for` loop rendering 5 Lucide heart icons (`data-testid="heart-icon"`).
   - Create `src/components/TypingInputDisplay.vue` with fixed bottom container `data-testid="typing-display"` projecting active text buffer in neon cyan monospace font.
   - Create `src/components/GameCanvas.vue` with tag `<canvas data-testid="game-canvas">`. Bind `requestAnimationFrame` loop to consume state exposed by `useGameEngine.ts`, rendering 4 layers: starfield background, word entities (highlighting correct letters in `emerald-500`), laser projectiles, and explosion particles.
-  - Implement continuous word recycling/respawn in `GameCanvas.vue`: keep the 5 generated terms in the active stream by respawning destroyed or fallen words at a random horizontal position with independent fall speed. End the match through `finishGame()` when the 20-second timer expires, or transition to `GAME_OVER` immediately when the player loses all 5 lives.
+  - Implement continuous word recycling/respawn in `GameCanvas.vue`: keep the 5 generated terms in the active stream by respawning destroyed or fallen words at a random horizontal position with independent fall speed. Count every destroyed or fallen appearance, including repeated appearances of the same term. End the match through `finishGame()` when the 20-second timer expires, or transition to `GAME_OVER` immediately when the player loses all 5 lives.
   - Create `src/components/GameScreen.vue` integrating `GameHeader`, `GameCanvas`, and `TypingInputDisplay` in a vertical layout.
 
 - [X] ### Task 5.4: Main Orchestration in App.vue
@@ -87,7 +87,7 @@
   - Create `e2e/` directory in root of `lexitype` and file `e2e/game-flow.spec.ts`.
   - Configure `playwright.config.ts` to launch Vite development server (`http://localhost:5173`) before running tests.
   - In `e2e/game-flow.spec.ts`, write test `test_full_game_loop_with_mock_api()` intercepting route `/api/generate-words` via `page.route()` to return static JSON of 5 words with HTTP 200 code.
-  - Simulate real interaction: click `[data-testid="start-btn"]`, type "Vue.js" in `[data-testid="topic-input"]`, click `[data-testid="submit-topic-btn"]`, and wait for the game canvas. Type the 5 words twice to exercise recycling while confirming the game remains active, then advance Playwright's virtual clock past 20 seconds and assert visibility of `[data-testid="wpm-metric"]` in the final modal.
+  - Simulate real interaction: click `[data-testid="start-btn"]`, type "Vue.js" in `[data-testid="topic-input"]`, click `[data-testid="submit-topic-btn"]`, and wait for the game canvas. Type the 5 words twice to exercise recycling and verify the destroyed-appearance count, then advance Playwright's virtual clock past 20 seconds and assert that WPM, destroyed appearances, and fallen appearances are shown in the final modal.
   - Write test `test_service_unavailable_flow()` intercepting `/api/generate-words` with HTTP 503 response and asserting that screen displays `[data-testid="retry-btn"]`.
   - Ensure Playwright browser binaries are installed via `npx playwright install`, then run `npx playwright test` and confirm complete suite executes successfully in headless mode.
 

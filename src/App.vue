@@ -13,7 +13,8 @@ const gameStore = useGameStore()
 const emptyMetrics: GameMetrics = {
   wpm: 0,
   accuracy: 0,
-  wordsCount: 0,
+  destroyedWords: 0,
+  fallenWords: 0,
 }
 </script>
 

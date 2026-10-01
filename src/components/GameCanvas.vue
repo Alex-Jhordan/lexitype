@@ -61,6 +61,8 @@ let animationFrame = 0
 let previousFrameTime = 0
 let secondAccumulator = 0
 let isFinished = false
+let destroyedWords = 0
+let fallenWords = 0
 
 function resizeCanvas(): void {
   const canvas = canvasRef.value
@@ -104,7 +106,8 @@ function finishGame(): void {
 function getMetrics(): GameMetrics {
   return {
     ...calculateMetrics(engine.correctKeys.value, engine.incorrectKeys.value, gameStore.elapsedTime),
-    wordsCount: gameStore.words.length,
+    destroyedWords,
+    fallenWords,
   }
 }
 
@@ -133,6 +136,7 @@ function handleKeyDown(event: KeyboardEvent): void {
 
   for (const word of existingWords) {
     if (!activeWords.includes(word)) {
+      destroyedWords += 1
       emit('word-destroyed', word)
       addExplosion(word.x, word.y)
       activeWords.push(word)
@@ -199,6 +203,7 @@ function renderFrame(timestamp: number): void {
 
   const missedWords = activeWords.filter((word) => word.y >= canvasHeight - 42)
   for (const word of missedWords) {
+    fallenWords += 1
     emit('word-missed', getMetrics())
     respawnWord(word)
   }

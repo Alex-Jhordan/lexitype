@@ -31,9 +31,9 @@ onMounted(() => {
       </header>
 
       <div class="grid gap-8 px-6 py-7 sm:px-9 md:grid-cols-[1.15fr_0.85fr]">
-        <section aria-labelledby="cleared-words-heading">
-          <h2 id="cleared-words-heading" class="mb-4 text-sm font-bold uppercase tracking-widest text-zinc-300">
-            Cleared words
+        <section aria-labelledby="word-glossary-heading">
+          <h2 id="word-glossary-heading" class="mb-4 text-sm font-bold uppercase tracking-widest text-zinc-300">
+            Word glossary
           </h2>
           <ul class="divide-y divide-zinc-800 border-y border-zinc-800">
             <li
@@ -61,8 +61,12 @@ onMounted(() => {
               <dd data-testid="accuracy-metric" class="text-xl font-bold tabular-nums text-lime-300">{{ metrics.accuracy }}%</dd>
             </div>
             <div class="flex items-baseline justify-between gap-3 py-4">
-              <dt class="text-sm text-zinc-400">Words cleared</dt>
-              <dd data-testid="words-count-metric" class="text-xl font-bold tabular-nums text-amber-300">{{ metrics.wordsCount }}</dd>
+              <dt class="text-sm text-zinc-400">Words destroyed</dt>
+              <dd data-testid="destroyed-words-metric" class="text-xl font-bold tabular-nums text-amber-300">{{ metrics.destroyedWords }}</dd>
+            </div>
+            <div class="flex items-baseline justify-between gap-3 py-4">
+              <dt class="text-sm text-zinc-400">Words fallen</dt>
+              <dd data-testid="fallen-words-metric" class="text-xl font-bold tabular-nums text-rose-400">{{ metrics.fallenWords }}</dd>
             </div>
           </dl>
         </section>

@@ -41,6 +41,8 @@ test('test_full_game_loop_with_mock_api', async ({ page }) => {
 
   await page.clock.runFor(21_000)
   await expect(page.getByTestId('wpm-metric')).toBeVisible()
+  await expect(page.getByTestId('destroyed-words-metric')).toHaveText('10')
+  await expect(page.getByTestId('fallen-words-metric')).toHaveText(/[1-9]\d*/)
 })
 
 test('test_service_unavailable_flow', async ({ page }) => {

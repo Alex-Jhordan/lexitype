@@ -15,5 +15,6 @@ export interface WordItem {
 export interface GameMetrics {
   wpm: number
   accuracy: number
-  wordsCount: number
+  destroyedWords: number
+  fallenWords: number
 }
