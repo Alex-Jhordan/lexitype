@@ -1,6 +1,6 @@
 # LexiType Space — Web Client (`lexitype`)
 
-**LexiType Space** is a space-themed 2D arcade typing web application designed to combine typing speed with real-time vocabulary learning. Controlled by a Vue 3 frontend and powered by a FastAPI backend integrated with Google Gemini (`gemini-2.5-flash`), the game dynamically generates thematic words and concise definitions based on any topic provided by the user.
+**LexiType Space** is a space-themed 2D arcade typing web application designed to combine typing speed with real-time vocabulary learning. Controlled by a Vue 3 frontend and powered by a FastAPI backend integrated with Groq (`openai/gpt-oss-20b` by default), the game dynamically generates thematic words and concise definitions based on any topic provided by the user.
 
 This repository contains the Single Page Application (SPA) frontend client for **LexiType Space**.
 
@@ -160,7 +160,7 @@ pnpm exec playwright test --ui
 
 ```bash
 # Validate TypeScript schemas and Vue component types
-pnpm vue-tsc --noEmit
+pnpm exec vue-tsc -b
 ```
 
 ---
