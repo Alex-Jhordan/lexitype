@@ -22,7 +22,7 @@ export function updateWordPosition(y: number, speed: number, seconds: number): n
 export function calculateWPM(correctChars: number, seconds: number): number {
   if (seconds <= 0) return 0
 
-  return (correctChars * 60) / (5 * seconds)
+  return Number(((correctChars * 60) / (5 * seconds)).toFixed(2))
 }
 
 export function calculateAccuracy(correctKeys: number, totalKeys: number): number {
