@@ -64,7 +64,7 @@
 - [X] ### Task 5.2: TDD GREEN - Implementing Initial Views and Modals
   - Create `src/components/InstructionsModal.vue` styled with Tailwind CSS (`bg-zinc-900/90 backdrop-blur-md`), including title with font "Press Start 2P" and button with attribute `data-testid="start-btn"`.
   - Create `src/components/TopicInputScreen.vue` with field `<input data-testid="topic-input">` bound via `v-model`, and button `<button data-testid="submit-topic-btn" :disabled="topic.length < 2">`.
-  - Create `src/components/FuelLoadingScreen.vue` including SVG silhouette of the ship (`data-testid="fuel-ship-svg"`) with vertical fill animation in CSS/Tailwind (`bg-cyan-500`).
+  - Create `src/components/FuelLoadingScreen.vue` including the ship SVG (`data-testid="fuel-ship-svg"`), vertical fuel-fill animation, and an animated cyan loading bar that remains active while `/api/generate-words` is pending. Display the elapsed API wait time, updated once per second, and stop the loading indicators when the response resolves or fails.
   - Create `src/components/ServiceUnavailableScreen.vue` with maintenance message and `data-testid="retry-btn"` button.
   - Create `src/components/GameOverModal.vue` implementing two-column layout without scroll; in `onMounted()`, import and trigger `confetti()` from `canvas-confetti`. Include identifiers `data-testid="wpm-metric"`, `data-testid="accuracy-metric"`, `data-testid="destroyed-words-metric"`, `data-testid="fallen-words-metric"`, and `data-testid="play-again-btn"`.
   - Run `npx vitest run src/components/__tests__/` and verify pass to green (Green).

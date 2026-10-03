@@ -1,3 +1,22 @@
+<script setup lang="ts">
+import { onMounted, onUnmounted, ref } from 'vue'
+
+const elapsedSeconds = ref(0)
+let startedAt = 0
+let elapsedTimer: number | undefined
+
+onMounted(() => {
+  startedAt = performance.now()
+  elapsedTimer = window.setInterval(() => {
+    elapsedSeconds.value = Math.floor((performance.now() - startedAt) / 1000)
+  }, 1000)
+})
+
+onUnmounted(() => {
+  if (elapsedTimer !== undefined) window.clearInterval(elapsedTimer)
+})
+</script>
+
 <template>
   <main class="flex min-h-screen flex-col items-center justify-center bg-zinc-950 px-5 text-center text-zinc-100">
     <svg
@@ -23,16 +42,34 @@
     </svg>
     <p class="text-xs font-bold uppercase tracking-[0.25em] text-cyan-300">Fueling the ship</p>
     <h1 class="mt-3 text-lg font-semibold text-white">Preparing your word field</h1>
+    <p data-testid="loading-elapsed" class="mt-2 text-xs text-zinc-400">
+      Waiting for the API response · {{ elapsedSeconds }}s
+    </p>
     <div class="mt-7 h-1 w-48 overflow-hidden bg-zinc-800" aria-hidden="true">
-      <div class="h-full w-1/2 animate-pulse bg-cyan-400" />
+      <div class="fuel-bar-fill h-full bg-cyan-400" />
     </div>
   </main>
 </template>
 
 <style scoped>
+.fuel-bar-fill {
+  width: 35%;
+  animation: fuel-bar-fill 1.2s ease-in-out infinite alternate;
+}
+
 .fuel-fill {
   fill: #22d3ee;
   animation: fuel-rise 2.4s ease-in-out infinite alternate;
+}
+
+@keyframes fuel-bar-fill {
+  from {
+    transform: translateX(-100%);
+  }
+
+  to {
+    transform: translateX(285%);
+  }
 }
 
 @keyframes fuel-rise {
