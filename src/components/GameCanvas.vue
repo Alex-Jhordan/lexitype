@@ -31,7 +31,6 @@ const emit = defineEmits<{
   (event: 'second-elapsed'): void
   (event: 'word-destroyed', word: CanvasWord): void
   (event: 'word-missed', metrics: GameMetrics): void
-  (event: 'finished', metrics: GameMetrics): void
 }>()
 
 const gameStore = useGameStore()
@@ -60,8 +59,6 @@ let canvasHeight = 0
 let animationFrame = 0
 let previousFrameTime = 0
 let secondAccumulator = 0
-let isFinished = false
-let destroyedWords = 0
 let fallenWords = 0
 
 function resizeCanvas(): void {
@@ -97,16 +94,10 @@ function respawnWord(word: CanvasWord): void {
   word.speed = undefined
 }
 
-function finishGame(): void {
-  if (isFinished) return
-  isFinished = true
-  emit('finished', getMetrics())
-}
-
 function getMetrics(): GameMetrics {
   return {
     ...calculateMetrics(engine.correctKeys.value, engine.incorrectKeys.value, gameStore.elapsedTime),
-    destroyedWords,
+    destroyedWords: engine.destroyedWords.value,
     fallenWords,
   }
 }
@@ -136,7 +127,7 @@ function handleKeyDown(event: KeyboardEvent): void {
 
   for (const word of existingWords) {
     if (!activeWords.includes(word)) {
-      destroyedWords += 1
+      engine.recordWordDestroyed()
       emit('word-destroyed', word)
       addExplosion(word.x, word.y)
       activeWords.push(word)
@@ -192,11 +183,6 @@ function renderFrame(timestamp: number): void {
   if (secondAccumulator >= 1) {
     secondAccumulator -= 1
     emit('second-elapsed')
-
-    if (gameStore.elapsedTime >= 20) {
-      finishGame()
-      return
-    }
   }
 
   engine.updateWordPositions(frameSeconds)
@@ -256,7 +242,7 @@ function renderFrame(timestamp: number): void {
     context.globalAlpha = 1
   }
 
-  if (!isFinished) animationFrame = window.requestAnimationFrame(renderFrame)
+  animationFrame = window.requestAnimationFrame(renderFrame)
 }
 
 onMounted(() => {

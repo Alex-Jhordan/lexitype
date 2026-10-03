@@ -17,12 +17,6 @@ function handleWordMissed(metrics: GameMetrics): void {
   }
 }
 
-function handleGameFinished(metrics: GameMetrics): void {
-  gameStore.gameMetrics = metrics
-  if (gameStore.currentState === 'PLAYING') {
-    gameStore.setState('GAME_OVER')
-  }
-}
 </script>
 
 <template>
@@ -33,7 +27,6 @@ function handleGameFinished(metrics: GameMetrics): void {
         @typing-update="typingBuffer = $event"
         @second-elapsed="gameStore.elapsedTime += 1"
         @word-missed="handleWordMissed"
-        @finished="handleGameFinished"
       />
     </section>
     <TypingInputDisplay :buffer="typingBuffer" />

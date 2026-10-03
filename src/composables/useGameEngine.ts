@@ -7,7 +7,9 @@ export interface GameWord {
 }
 
 export const MIN_WORD_SPEED = 20
-export const MAX_WORD_SPEED = 60
+export const MAX_WORD_SPEED = 40
+export const DESTROYED_WORDS_PER_SPEED_INCREASE = 5
+export const WORD_SPEED_INCREASE = 10
 
 export function createWordSpeed(): number {
   return MIN_WORD_SPEED + Math.random() * (MAX_WORD_SPEED - MIN_WORD_SPEED)
@@ -48,6 +50,8 @@ export function useGameEngine(words: GameWord[]) {
   const correctKeys = ref(0)
   const incorrectKeys = ref(0)
   const totalKeys = ref(0)
+  const destroyedWords = ref(0)
+  let speedBonus = 0
 
   function selectTarget(key: string): GameWord | null {
     const candidates = words.filter((word) =>
@@ -104,8 +108,18 @@ export function useGameEngine(words: GameWord[]) {
 
   function updateWordPositions(seconds: number): void {
     for (const word of words) {
-      word.speed ??= createWordSpeed()
+      word.speed ??= createWordSpeed() + speedBonus
       word.y = updateWordPosition(word.y, word.speed, seconds)
+    }
+  }
+
+  function recordWordDestroyed(): void {
+    destroyedWords.value += 1
+    if (destroyedWords.value % DESTROYED_WORDS_PER_SPEED_INCREASE !== 0) return
+
+    speedBonus += WORD_SPEED_INCREASE
+    for (const word of words) {
+      word.speed = (word.speed ?? createWordSpeed()) + WORD_SPEED_INCREASE
     }
   }
 
@@ -115,7 +129,9 @@ export function useGameEngine(words: GameWord[]) {
     correctKeys,
     incorrectKeys,
     totalKeys,
+    destroyedWords,
     handleKeyDown,
     updateWordPositions,
+    recordWordDestroyed,
   }
 }
