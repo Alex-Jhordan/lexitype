@@ -52,7 +52,7 @@ describe('useGameEngine', () => {
     for (let count = 0; count < 5; count += 1) gameEngine.recordWordDestroyed()
     expect(words.map(({ speed }) => speed)).toEqual([40, 80])
 
-    const respawnedWord = { word: 'charlie', y: 0 }
+    const respawnedWord: GameWord = { word: 'charlie', y: 0 }
     words.push(respawnedWord)
     gameEngine.updateWordPositions(0)
 
